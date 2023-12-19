@@ -17,21 +17,10 @@ jobs:
     name: Foundry project
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: recursive
-
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
-
-      - name: Install geth
-      - uses: gacts/install-geth-tools@v1
-
-      - name: Start geth node
-      - run: |
-         geth --http --http.api eth,web3 --graphql -dev
 
       - name: Run Forge build
         run: |
@@ -39,7 +28,8 @@ jobs:
           forge build --sizes
         id: build
 
-      - name: Run Forge tests
+      - name: Run tests
+        shell: bash
         run: |
-          forge test -vvv
+          forge test
         id: test
