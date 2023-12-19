@@ -1,9 +1,5 @@
 name: test
 
-concurrency:
-  cancel-in-progress: true
-  group: ${{github.workflow}}-${{github.ref}}
-
 on:
   push:
     branches:
@@ -21,17 +17,18 @@ jobs:
     name: Foundry project
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
-
-      - name: Install geth
-      - uses: gacts/install-geth-tools@v1
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
+
+      - name: Install geth
+      - uses: gacts/install-geth-tools@v1
+
       - name: Start geth node
       - run: |
          geth --http --http.api eth,web3 --graphql -dev
