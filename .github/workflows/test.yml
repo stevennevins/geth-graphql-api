@@ -17,10 +17,16 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Install geth
+      - uses: gacts/install-geth-tools@v1
+
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
+      - name: Start geth node
+      - run: |
+         geth --http --http.api eth,web3 --graphql -dev
 
       - name: Run Forge build
         run: |
